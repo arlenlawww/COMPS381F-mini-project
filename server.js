@@ -5,7 +5,7 @@ const assert = require('assert');
 const objId = require('mongodb').objId;
 const formidable = require('express-formidable');
 const MongoClient = require('mongodb').MongoClient;
-const mongourl = 'mongodb+srv://arlenbb:eIY2YXjLXA2DtceT@cluster0.sbgl1bc.mongodb.net/information '; 
+const mongourl = 'mongodb+srv://arlenbb:eIY2YXjLXA2DtceT@cluster0.sbgl1bc.mongodb.net/information?retryWrites=true&w=majority';
 const dbName = 'information';
 const express = require('express');
 const app = express();
@@ -268,7 +268,7 @@ app.get('/edit', (req, res)=>{
             client.close();
             console.log("Closed DB connection");
             console.log(docs[0]);
-            res.status(200).render('edit', {student: docs[0]});
+            res.status(200).render('edit', {information: docs[0]});
         });
     });
 
@@ -357,7 +357,7 @@ app.get('/api/information/name/:name', function(req,res)  {
         res.status(500).json({"error": "Name is missing."});
     }});
 
-app.get('/api/student/stu_id/:stu_id', (req,res) => {
+app.get('/api/information/stu_id/:stu_id', (req,res) => {
     console.log("...Rest Api");
 	console.log("stu_id: " + req.params.stu_id);
     if (req.params.stu_id) {
