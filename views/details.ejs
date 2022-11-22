@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Student Information</title>  
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+        function goBack() { window.history.back();}
+        </script>
+        <style>
+            img {
+              max-width: 100%;
+              height: auto;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="jumbotron text-center">
+            <h1>Details of <%= information.name %></h1>
+        </div>
+        <div class="container-fluid">
+            <div class="well">
+            <div class="row">
+                <% if (information.photo) { %>
+                    <img src="data:image/<%= information.photo.mimetype %>;base64, <%= information.photo.data %>"><br>
+                <% } %>
+            </div>
+            <div class="row">
+                    <p>Student Name:  <% if (typeof (information.stu_name) !== "undefined") { %><%= information.stu_name %><% } %></p><br>
+                    <p>Student ID:  <% if (typeof (information.stu_id) !== "undefined") { %><%= information.stu_id %><% } %></p><br>
+                    <p>Age:  <% if (typeof (information.age) !== "undefined") { %><%= information.age %><% } %></p><br>
+                    <p>Programme:  <% if (typeof (information.programme) !== "undefined") { %><%= information.programme %><% } %></p><br>
+                    <p>Address:  <% if (typeof (information.address) !== "undefined") { %><%= information.address %><% } %></p><br>
+                    <p>Contact Number:  <% if (typeof (information.con_no) !== "undefined") { %><%= information.con_no %><% } %></p><br>
+                    <p>Cumulative GPA:  <% if (typeof (information.cgpa) !== "undefined") { %>[<%= information.cgpa %>]<% } %></p><br>
+                    <p>Teacher: <%= information.teacher %></p><br>
+                
+            </div>
+            </div>
+            <div class="row ml-md-auto">
+
+                <a href="/edit?_id=<%= information.id_ %>" class="btn btn-primary" role="button">Edit</a>
+                <a href="/delete?_id=<%= information._id %>&teacher=<%= information.teacher %>" class="btn btn-primary" role="button">Delete</a>
+                
+                <button class="btn btn-primary" onclick="goBack()">Back</button>
+            </div>
+            <br>
+            
+            <p>end ;)</p>
+        </div>
+    </body>
+</html>

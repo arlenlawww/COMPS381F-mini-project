@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Student Information</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <div class="jumbotron text-center">
+            <h1>Hello Student~ <%= stu_name %></h1>
+           <p>Display all <%= information %> documents.</p>
+        </div>
+        <div class="container-fluid">
+            <div class="row ml-md-auto">
+                <a href="/logout" class="btn btn-primary pull-right" role="button">Log out :)</a>
+                <a href="/create" class="btn btn-primary" role="button">Create new student information.</a>
+            </div>
+            <br>
+            <div class="row">
+                <p>Search information:
+                <label for="bar"><span class="glyphicon glyphicon-search"></span></label><input style="width:85%" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search student name:" stu_name="bar"><br></p>
+                <table id="myTable" class="table table-striped table-bordered table-hover table-scroll">
+                    <thead ><tr class="table-primary"><th>Student Information</th></tr></thead>
+                    <tbody style='height:260px;display:block;overflow:scroll'>
+                        <% for (var p of information) {%>
+                            <tr>
+                                <td><a href="/details?_id=<%= r.id_ %>"><%= p.stu_name %></a></td>
+                                <td style="display:none;"><%= p.programme%></td>
+                                <td style="display:none;"><%= p.cgpa%></td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+            <p>End of the page.</p>
+        </div>
+        <script>
+        $(document).ready(function(){
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+        </script>
+    </body>
+</html>
