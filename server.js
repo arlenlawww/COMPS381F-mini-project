@@ -5,7 +5,11 @@ const assert = require('assert');
 const objId = require('mongodb').objId;
 const formidable = require('express-formidable');
 const MongoClient = require('mongodb').MongoClient;
+<<<<<<< HEAD
 const mongourl = 'mongodb+srv://arlenbb:eIY2YXjLXA2DtceT@cluster0.sbgl1bc.mongodb.net/?retryWrites=true&w=majority';
+=======
+const mongodburl = 'mongodb+srv://arlenbb:eIY2YXjLXA2DtceT@cluster0.sbgl1bc.mongodb.net/?retryWrites=true&w=majority';
+>>>>>>> 503e711 (init)
 const dbName = 'information';
 const express = require('express');
 const app = express();
@@ -29,7 +33,7 @@ app.use(session({
 }));
 
 const createDocument = (db, createDoc, callback) => {
-    const client = new MongoClient(mongourl);
+    const client = new MongoClient(mongodburl);
     client.connect((err) =>{
         assert.equal(null, err);
         console.log("DB connection successful");
@@ -63,7 +67,7 @@ const deleteDocument = (db, criteria, callback) => {
     );
 };
 const updateDocument = (criteria, updateDoc, callback) => {
-    const client = new MongoClient(mongourl);
+    const client = new MongoClient(mongodburl);
     client.connect((err) => {
         assert.equal(null, err);
         console.log("DB connection successful");
@@ -83,7 +87,7 @@ const updateDocument = (criteria, updateDoc, callback) => {
 }
 
 const handle_Find = (req, res, criteria) =>{
-    const client = new MongoClient(mongourl);
+    const client = new MongoClient(mongodburl);
     client.connect((err)=>{
         assert.equal(null, err);
         console.log("DB connection successful");
@@ -98,7 +102,7 @@ const handle_Find = (req, res, criteria) =>{
 }
 
 const handle_Details = (res, criteria) => {
-    const client = new MongoClient(mongourl);
+    const client = new MongoClient(mongodburl);
     client.connect((err) => {
         assert.equal(null, err);
         console.log("DB connection successful");
@@ -115,7 +119,7 @@ const handle_Details = (res, criteria) => {
 }
 
 const handle_Delete = (res, criteria) =>{
-    const client = new MongoClient(mongourl);
+    const client = new MongoClient(mongodburl);
     client.connect((err) => {
         console.log("Connection seccessful");
         const db = client.db(dbName);
@@ -177,7 +181,7 @@ app.get('/logout', (req, res)=>{
 
 app.get('/home', (req, res)=>{
     console.log("Directing to Home page")
-    const client = new MongoClient(mongourl);
+    const client = new MongoClient(mongodburl);
     client.connect((err)=>{
         assert.equal(null, err);
         console.log("Connection seccessful.");
@@ -201,7 +205,7 @@ app.get('/create', (req, res)=>{
 });
 app.post('/create', (req, res)=>{
     console.log("...create a new document!");
-    const client = new MongoClient(mongourl);
+    const client = new MongoClient(mongodburl);
     client.connect((err)=>{
         assert.equal(null, err);
         console.log("Connection seccessful.");
@@ -256,7 +260,7 @@ var informationId = new informationId(timestamp);
 
 app.get('/edit', (req, res)=>{
     console.log("Directing to update page");
-    const client = new MongoClient(mongourl);
+    const client = new MongoClient(mongodburl);
     client.connect((err) => {
         assert.equal(null, err);
         console.log("Connected successfully to server");
@@ -276,7 +280,7 @@ app.get('/edit', (req, res)=>{
 app.post('/update', (req, res)=>{
     var updateDOC={};
     console.log("Updating now");
-    const client = new MongoClient(mongourl);
+    const client = new MongoClient(mongodburl);
         client.connect((err) => {
             assert.equal(null, err);
             console.log("Connected successfully to server");
@@ -341,7 +345,7 @@ app.get('/api/information/name/:name', function(req,res)  {
     if (req.params.name) {
         let criteria = {};
         criteria['name'] = req.params.name;
-        const client = new MongoClient(mongourl);
+        const client = new MongoClient(mongodburl);
         client.connect((err) => {
             assert.equal(null, err);
             console.log("Server connected successfully.");
@@ -363,7 +367,7 @@ app.get('/api/information/stu_id/:stu_id', (req,res) => {
     if (req.params.stu_id) {
         let criteria = {};
         criteria['stu_id'] = req.params.stu_id;
-        const client = new MongoClient(mongourl);
+        const client = new MongoClient(mongodburl);
         client.connect((err) => {
             assert.equal(null, err);
             console.log("Server connected successfully.");
