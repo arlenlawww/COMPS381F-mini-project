@@ -10,13 +10,12 @@ _{username: "student1", password: "password1"}_
 _{username: "teacher1", password: "password2"}_
 _{username: "teacher2", password: "password3"}_
 
-After logging in to the home page, there are fucntions for creating student profile, which the data will be stored in MongoDB.
+There are functions for building student profiles on the main page after logging in, and the information is kept in MongoDB.
 
-After creating the student profile, user can return to home page by clicking the return button.
+The user can go back to the home page after creating the student profile by clicking the return button.
 
-At the home page, there are search fucntion for searching the inserted student profile data, and provide the logout function as well.
+The search tool for the student profile data that has been entered is available on the home page, along with a logout option.
 
-Users can delete the profile if the the user type are teacher, otherwise the permission is denied.
+If a person is a teacher, they are permitted to erase their profile; otherwise, they are not.
 
-The HTTP request type using in the application is POST to secure the login information.
-Also, the applicaion provides API, and valid login information.
+To safeguard the login information, the application uses the POST HTTP request method, the application also offers a legitimate login and an API.
