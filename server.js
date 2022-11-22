@@ -186,7 +186,7 @@ app.get('/home', (req, res)=>{
         findDocument(db, {}, (docs)=>{
             client.close();
             console.log("Closed DB connection.");
-            res.status(200).render('home', {name: `${req.session.userid}`, nstudent: docs.length, student: docs});
+            res.status(200).render('home', {name: `${req.session.userid}`, linformation: docs.length, information: docs});
         });
     });
 
