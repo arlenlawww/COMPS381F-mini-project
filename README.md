@@ -1,9 +1,9 @@
 # COMPS381F-mini-project Student Profile
 
-# Group information 
+## Group information 
 ***Law Chi Sing (12461409), Cheng Po Yi (12461680), Chow Hoi Lam (12461366)***
 
-# Operation Guide
+## Operation Guide
 
 There are 3 sample login username and password provided.
 _{username: "student1", password: "password1"}_
