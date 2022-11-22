@@ -10,13 +10,12 @@
     </head>
     <body>
         <div class="jumbotron text-center">
-            <h1>Hello Teacher <%= name %></h1>
-           <p>Display all <%= information %> profiles.</p>
+            <h1>Hello User <%= name %></h1>
         </div>
         <div class="container-fluid">
             <div class="row ml-md-auto">
-                <a href="/logout" class="btn btn-primary pull-right" role="button">Log out :)</a>
-                <a href="/create" class="btn btn-primary" role="button">Create new student information.</a>
+                <a href="/logout" class="btn btn-primary pull-right" role="button">Log out</a>
+                <a href="/create" class="btn btn-primary" role="button">Create new student profile</a>
             </div>
             <br>
             <div class="row">
@@ -35,7 +34,6 @@
                     </tbody>
                 </table>
             </div>
-            <p>End of the page.</p>
         </div>
         <script>
         $(document).ready(function(){
