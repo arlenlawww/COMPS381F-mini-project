@@ -5,7 +5,7 @@ const assert = require('assert');
 const objId = require('mongodb').objId;
 const formidable = require('express-formidable');
 const MongoClient = require('mongodb').MongoClient;
-const mongoudbrl = 'mongodb+srv://arlenbb:eIY2YXjLXA2DtceT@cluster0.sbgl1bc.mongodb.net/?retryWrites=true&w=majority';
+const mongodburl = 'mongodb+srv://arlenbb:eIY2YXjLXA2DtceT@cluster0.sbgl1bc.mongodb.net/?retryWrites=true&w=majority';
 const dbName = 'information';
 const express = require('express');
 const app = express();
@@ -28,7 +28,7 @@ app.use(session({
     keys: ['key$1'],
 }));
 
-const createDocument = (db, createDoc, callback) => {
+const createProfile = (db, createDoc, callback) => {
     const client = new MongoClient(mongodburl);
     client.connect((err) =>{
         assert.equal(null, err);
@@ -43,16 +43,16 @@ const createDocument = (db, createDoc, callback) => {
     });
 }
 
-const findDocument = (db, criteria, callback) => {
+const findProfile = (db, criteria, callback) => {
     let cursor = db.collection('information').find(criteria);
-    console.log(`findDocument: ${JSON.stringify(criteria)}`);
+    console.log(`findProfile: ${JSON.stringify(criteria)}`);
     cursor.toArray((err, docs)=>{
         assert.equal(err, null);
-        console.log(`findDocument: ${docs.length}`);
+        console.log(`findProfile: ${docs.length}`);
         callback(docs);
     });
 }
-const deleteDocument = (db, criteria, callback) => {
+const deleteProfile = (db, criteria, callback) => {
     db.collection('information').deleteOne(
        criteria, 
        (err, results) => {
@@ -62,7 +62,7 @@ const deleteDocument = (db, criteria, callback) => {
        }
     );
 };
-const updateDocument = (criteria, updateDoc, callback) => {
+const updateProfile = (criteria, updateDoc, callback) => {
     const client = new MongoClient(mongodburl);
     client.connect((err) => {
         assert.equal(null, err);
@@ -89,7 +89,7 @@ const handle_Find = (req, res, criteria) =>{
         console.log("DB connection successful");
         const db = client.db(dbName);
         
-        findDocument(db, {}, (docs)=>{
+        findProfile(db, {}, (docs)=>{
             client.close();
             console.log("Closed DB connection.");
             res.status(200).render('home', {name: `${req.session.userid}`, linformation: docs.length, information: docs});
@@ -106,7 +106,7 @@ const handle_Details = (res, criteria) => {
 
         let DOCID = {};
         DOCID['id_'] = objId(criteria.id_);
-        findDocument(db, DOCID, (docs) => {  
+        findProfile(db, DOCID, (docs) => {  
             client.close();
             console.log("DB connection closed");
             res.status(200).render('details', {information: docs[0]});
@@ -123,14 +123,14 @@ const handle_Delete = (res, criteria) =>{
         let DOCID = {};
         DOCID['id_'] = objId(criteria.id_);
         DOCID['teacher'] = criteria.teacher;
-        deleteDocument(db, DOCID, (results)=>{
+        deleteProfile(db, DOCID, (results)=>{
             client.close();
             console.log("Closed DB connection");
             res.status(200).render('info', {message: "The information has been deleted."});
         })     
     });
     client.close();
-    res.status(200).render('info', {message: "Document has been deleted."});
+    res.status(200).render('info', {message: "Profile has been deleted."});
 }
 
 app.get('/', (req, res)=>{
@@ -183,7 +183,7 @@ app.get('/home', (req, res)=>{
         console.log("Connection seccessful.");
         const db = client.db(dbName);
         
-        findDocument(db, {}, (docs)=>{
+        findProfile(db, {}, (docs)=>{
             client.close();
             console.log("Closed DB connection.");
             res.status(200).render('home', {name: `${req.session.userid}`, linformation: docs.length, information: docs});
@@ -200,7 +200,7 @@ app.get('/create', (req, res)=>{
     res.status(200).render("create");
 });
 app.post('/create', (req, res)=>{
-    console.log("...create a new document!");
+    console.log("Create a new profile");
     const client = new MongoClient(mongodburl);
     client.connect((err)=>{
         assert.equal(null, err);
@@ -238,10 +238,10 @@ var informationId = new informationId(timestamp);
         
         if(DOC.stu_name &&  DOC.teacher){
             console.log("Creating");
-            createDocument(db, DOC, (docs)=>{
+            createProfile(db, DOC, (docs)=>{
                 client.close();
                 console.log("Closed DB connection");
-                res.status(200).render('info', {message: "Document has been created."});
+                res.status(200).render('info', {message: "Profile has been created."});
             });
         } else{
             client.close();
@@ -251,7 +251,7 @@ var informationId = new informationId(timestamp);
     });
     client.close();
     console.log("Closed DB connection");
-    res.status(200).render('info', {message: "Document created"}); 
+    res.status(200).render('info', {message: "Profile created"}); 
 });
 
 app.get('/edit', (req, res)=>{
@@ -264,7 +264,7 @@ app.get('/edit', (req, res)=>{
 
         let DOCID = {};
         DOCID['id_'] = objId(req.query.id_);
-        findDocument(db, DOCID, (docs) => {  
+        findProfile(db, DOCID, (docs) => {  
             client.close();
             console.log("Closed DB connection");
             console.log(docs[0]);
@@ -306,16 +306,16 @@ app.post('/update', (req, res)=>{
                             
                     });
                     updateDOC['photo'] = stu_photo;
-                    updateDocument(DOCID, updateDOC, (docs) => {
+                    updateProfile(DOCID, updateDOC, (docs) => {
                         client.close();
                         console.log("Closed DB connection");
-                        res.status(200).render('info', {message: "Document has been updated!"});
+                        res.status(200).render('info', {message: "Profile has been updated!"});
                     });
                 }else{
-                    updateDocument(DOCID, updateDOC, (docs) => {
+                    updateProfile(DOCID, updateDOC, (docs) => {
                         client.close();
                         console.log("Closed DB connection");
-                        res.status(200).render('info', {message: "Document has been updated!"});
+                        res.status(200).render('info', {message: "Profile has been updated!"});
                     });
                 }
             }else{
@@ -347,7 +347,7 @@ app.get('/api/information/name/:name', function(req,res)  {
             console.log("Server connected successfully.");
             const db = client.db(dbName);
 
-            findDocument(db, criteria, (docs) => {
+            findProfile(db, criteria, (docs) => {
                 client.close();
                 console.log("DB connection closed.");
                 res.status(200).json(docs);
@@ -368,7 +368,7 @@ app.get('/api/information/stu_id/:stu_id', (req,res) => {
             assert.equal(null, err);
             console.log("Server connected successfully.");
             const db = client.db(dbName);
-            findDocument(db, criteria, (docs) => {
+            findProfile(db, criteria, (docs) => {
                 client.close();
                 console.log("DB connection closed.");
                 res.status(200).json(docs);
